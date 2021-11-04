@@ -1,0 +1,7 @@
+const ActionType = {
+    LOAD_PROJECTS: `LOAD_PROJECTS`,
+    CHANGE_LOAD_STATUS: `CHANGE_LOAD_STATUS`,
+    LOAD_SORTING_PROJECTS: `LOAD_SORTING_PROJECTS`,
+};
+
+export default ActionType;

@@ -1,24 +1,11 @@
 import { extend } from "../../utils";
+import ActionCreator from "./actions";
+import ActionType from "./types";
 
 const initialState = {
     projects: [],
     loadStatus: false,
-};
-
-const ActionType = {
-    LOAD_PROJECTS: `LOAD_PROJECTS`,
-    CHANGE_LOAD_STATUS: `CHANGE_LOAD_STATUS`,
-};
-
-const ActionCreator = {
-    loadProjects: (data) => ({
-        type: ActionType.LOAD_PROJECTS,
-        payload: data
-    }),
-    changeLoadStatus: (loadStatus) => ({
-        type: ActionType.CHANGE_LOAD_STATUS,
-        payload: loadStatus
-    }),
+    sortingProjects: [],
 };
 
 const Operation = {
@@ -26,6 +13,12 @@ const Operation = {
         return api.get(`/projects`)
             .then((data) => {
                 dispatch(ActionCreator.loadProjects(data.data));
+            });
+    },
+    loadSortingProjects: (subject) => (dispatch, getState, api) => {
+        return api.get(`/projects?subject=${subject}`)
+            .then((data) => {
+                dispatch(ActionCreator.loadSortingProjects(data.data));
                 dispatch(ActionCreator.changeLoadStatus(true));
             });
     },
@@ -37,14 +30,14 @@ const reducer = (state = initialState, action) => {
             return extend(state, { projects: action.payload });
         case ActionType.CHANGE_LOAD_STATUS:
             return extend(state, { loadStatus: action.payload });
+        case ActionType.LOAD_SORTING_PROJECTS:
+            return extend(state, { sortingProjects: action.payload });
         default:
             return state;
     }
 };
 
 export {
-    ActionType,
-    ActionCreator,
     Operation,
     reducer,
 };

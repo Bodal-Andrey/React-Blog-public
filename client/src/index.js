@@ -19,10 +19,11 @@ const store = createStore(
 );
 
 store.dispatch(PostsOperation.loadPosts());
-store.dispatch(PostsOperation.loadComments());
+store.dispatch(PostsOperation.loadSortingPosts());
 store.dispatch(LastCommentsOperation.loadLastComments());
 store.dispatch(PostsOperation.loadUser());
 store.dispatch(ProjectsOperation.loadProjects());
+store.dispatch(ProjectsOperation.loadSortingProjects());
 store.dispatch(ProductsOperation.loadProducts());
 
 ReactDOM.render(

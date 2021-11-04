@@ -8,7 +8,12 @@ const getLoadStatus = (state) => {
     return state[NameSpace.PROJECTS].loadStatus;
 };
 
+const getSortingProjects = (state) => {
+    return state[NameSpace.PROJECTS].sortingProjects;
+};
+
 export {
     getProjects,
-    getLoadStatus
+    getLoadStatus,
+    getSortingProjects,
 };

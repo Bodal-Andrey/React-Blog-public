@@ -2,11 +2,11 @@ const tagType = [`graphic`, `angular2`, `graphic`, `react`, `it`, `science`];
 
 const projectMenuTitle = [`All`, `Applications`, `Frameworks`, `Scripts`, `Layouts`, `Graphic`];
 
-const productMenuTitle = [`All`, `WordPress`, `Prestashop`, `HTML`, `PSD Templates`, `PHP Scripts`];
+const productMenuTitle = [`All`, `Wordpress`, `Prestashop`, `HTML`, `PSD Templates`, `PHP Scripts`];
 
 const menuTitle = {
     project: [`All`, `Applications`, `Frameworks`, `Scripts`, `Layouts`, `Graphic`],
-    product: [`All`, `WordPress`, `Prestashop`, `HTML`, `PSD Templates`, `PHP Scripts`]
+    product: [`All`, `Wordpress`, `Prestashop`, `HTML`, `PSD Templates`, `PHP Scripts`]
 };
 
 const categories = [
@@ -45,7 +45,7 @@ const navigation = [
         route: `ABOUT_ME`,
     },
     {
-        class: ``,
+        class: `projects`,
         title: `My projects`,
         route: `MY_PROJECTS`,
     },

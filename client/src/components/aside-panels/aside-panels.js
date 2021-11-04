@@ -1,9 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from 'react-redux';
 import { AppRoute } from "../../const";
 import { categories, tagType } from "../../settings";
+import { Operation } from '../../reducers/posts/posts';
+import { getPosts } from '../../reducers/posts/selectors';
+import ActionCreator from '../../reducers/posts/actions';
 
-const AsidePanels = ({ user }) => {
+const AsidePanels = ({ user, posts, onCategoryClick, onOtherClick }) => {
 
   return (
     <React.Fragment>
@@ -28,11 +32,11 @@ const AsidePanels = ({ user }) => {
           {categories.map((category) => {
             return (
               <li className={`nav-elipse-${category.color}`}>
-                <Link to={AppRoute.ARTICLES} href="#" title={`Blog ${category.name} articles`}>{category.name}</Link>
+                <Link onClick={() => onCategoryClick(category.name)} to={AppRoute.ARTICLES} href="#" title={`Blog ${category.name} articles`}>{category.name}</Link>
               </li>
             );
           })}
-          <li><a href="#" title="Blog other articles">Other</a></li>
+          <li><Link onClick={() => onOtherClick(posts)} to={AppRoute.ARTICLES} href="#" title="Blog other articles">Other</Link></li>
         </ul>
       </aside>
       <aside className="advertisement">
@@ -62,4 +66,19 @@ const AsidePanels = ({ user }) => {
   );
 };
 
-export default AsidePanels;
+const mapStateToProps = (state) => ({
+  posts: getPosts(state),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onOtherClick(posts) {
+    dispatch(ActionCreator.loadSortingPosts(posts));
+    dispatch(ActionCreator.changePostCategory(`Other`));
+},
+  onCategoryClick(category) {
+    dispatch(Operation.loadSortingPosts(category));
+    dispatch(ActionCreator.changePostCategory(category));
+  } 
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AsidePanels);

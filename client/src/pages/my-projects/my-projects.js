@@ -2,13 +2,13 @@ import React from "react";
 import { connect } from "react-redux";
 import Layout from "../../common/layout";
 import CategoryTitle from "../../components/category-title";
-import PortfolioMenu from "../../components/portfolio-menu";
+import ProjectsPortfolioMenu from "../../components/projects-portfolio-menu";
 import Portfolio from "../../components/portfolio";
 import { menuTitle } from "../../settings";
-import { getProjects, getLoadStatus } from "../../reducers/projects/selectors";
+import { getLoadStatus, getSortingProjects, getProjects } from "../../reducers/projects/selectors";
 import withLoad from "../../components/hocs/withLoad";
 
-const MyProjects = ({ projects }) => {
+const MyProjects = ({ sortingProjects, projects }) => {
 
     return (
         <Layout>
@@ -17,17 +17,17 @@ const MyProjects = ({ projects }) => {
                     <div className="col-xs-12">
                         <CategoryTitle
                             title={`Portfolio`}
-                            quantity={projects.length}
+                            quantity={sortingProjects.length}
                             name={`Projects`}
                         />
                     </div>
                     <div className="col-xs-12">
-                        <PortfolioMenu title={menuTitle.project} />
+                        <ProjectsPortfolioMenu title={menuTitle.project} projects={projects} />
                     </div>
                     <div className="col-xs-12">
                         <Portfolio
                             title={menuTitle.project}
-                            projects={projects}
+                            projects={sortingProjects}
                         />
                     </div>
                 </div>
@@ -38,6 +38,7 @@ const MyProjects = ({ projects }) => {
 
 const mapStateToProps = (state) => ({
     projects: getProjects(state),
+    sortingProjects: getSortingProjects(state),
     loadStatus: getLoadStatus(state),
 });
 

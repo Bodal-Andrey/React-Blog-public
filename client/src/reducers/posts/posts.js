@@ -1,45 +1,17 @@
 import { extend } from "../../utils";
+import ActionCreator from "./actions";
+import ActionType from "./types";
 
 const initialState = {
     posts: [],
+    sortingPosts: [],
+    postCategory: ``,
     user: [],
-    comments: [],
     loadStatus: false,
-};
-
-const ActionType = {
-    LOAD_POSTS: `LOAD_POSTS`,
-    LOAD_USER: `LOAD_USER`,
-    LOAD_COMMENTS: `LOAD_COMMENTS`,
-    CHANGE_LOAD_STATUS: `CHANGE_LOAD_STATUS`,
-};
-
-const ActionCreator = {
-    loadPosts: (data) => ({
-        type: ActionType.LOAD_POSTS,
-        payload: data
-    }),
-    loadUser: (data) => ({
-        type: ActionType.LOAD_USER,
-        payload: data
-    }),
-    loadComments: (data) => ({
-        type: ActionType.LOAD_COMMENTS,
-        payload: data
-    }),
-    changeLoadStatus: (loadStatus) => ({
-        type: ActionType.CHANGE_LOAD_STATUS,
-        payload: loadStatus
-    }),
+    postId: 1,
 };
 
 const Operation = {
-    loadComments: () => (dispatch, getState, api) => {
-        return api.get(`/comments`)
-            .then((data) => {
-                dispatch(ActionCreator.loadComments(data.data));
-            });
-    },
     loadUser: () => (dispatch, getState, api) => {
         return api.get(`/user`)
             .then((data) => {
@@ -48,9 +20,15 @@ const Operation = {
             });
     },
     loadPosts: () => (dispatch, getState, api) => {
-        return api.get(`/posts`)
+        return api.get(`/posts?_embed=comments`)
             .then((data) => {
                 dispatch(ActionCreator.loadPosts(data.data));
+            });
+    },
+    loadSortingPosts: (category) => (dispatch, getState, api) => {
+        return api.get(`/posts?_embed=comments&category=${category}`)
+            .then((data) => {
+                dispatch(ActionCreator.loadSortingPosts(data.data));
             });
     },
 };
@@ -59,20 +37,22 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case ActionType.LOAD_POSTS:
             return extend(state, { posts: action.payload });
+        case ActionType.LOAD_SORTING_POSTS:
+            return extend(state, { sortingPosts: action.payload });
         case ActionType.LOAD_USER:
             return extend(state, { user: action.payload });
-        case ActionType.LOAD_COMMENTS:
-            return extend(state, { comments: action.payload });
         case ActionType.CHANGE_LOAD_STATUS:
             return extend(state, { loadStatus: action.payload });
+        case ActionType.CHANGE_POST_ID:
+            return extend(state, { postId: action.payload });
+        case ActionType.CHANGE_POST_CATEGORY:
+            return extend(state, { postCategory: action.payload });
         default:
             return state;
     }
 };
 
 export {
-    ActionType,
-    ActionCreator,
     Operation,
     reducer,
 };

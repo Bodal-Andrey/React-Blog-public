@@ -8,7 +8,12 @@ const getLoadStatus = (state) => {
     return state[NameSpace.PRODUCTS].loadStatus;
 };
 
+const getSortingProducts = (state) => {
+    return state[NameSpace.PRODUCTS].sortingProducts;
+};
+
 export {
     getProducts,
     getLoadStatus,
+    getSortingProducts,
 };

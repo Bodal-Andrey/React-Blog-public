@@ -3,12 +3,12 @@ import { connect } from "react-redux";
 import Layout from "../../common/layout";
 import CategoryTitle from "../../components/category-title";
 import Portfolio from '../../components/portfolio';
-import PortfolioMenu from "../../components/portfolio-menu";
+import ProductsPortfolioMenu from "../../components/products-portfolio-menu";
 import { menuTitle } from "../../settings";
-import { getProducts, getLoadStatus } from "../../reducers/products/selectors";
+import { getProducts, getSortingProducts, getLoadStatus } from "../../reducers/products/selectors";
 import withLoad from "../../components/hocs/withLoad";
 
-const Products = ({ products }) => {
+const Products = ({ sortingProducts, products }) => {
 
     return (
         <Layout>
@@ -17,17 +17,17 @@ const Products = ({ products }) => {
                     <div className="col-xs-12">
                         <CategoryTitle
                             title={`Shop`}
-                            quantity={products.length}
+                            quantity={sortingProducts.length}
                             name={`Products`}
                         />
                     </div>
                     <div className="col-xs-12">
-                        <PortfolioMenu title={menuTitle.product} />
+                        <ProductsPortfolioMenu title={menuTitle.product} products={products} />
                     </div>
                     <div className="col-xs-12">
                         <Portfolio
                             title={menuTitle.product}
-                            products={products}
+                            products={sortingProducts}
                         />
                     </div>
                 </div>
@@ -38,6 +38,7 @@ const Products = ({ products }) => {
 
 const mapStateToProps = (state) => ({
     products: getProducts(state),
+    sortingProducts: getSortingProducts(state),
     loadStatus: getLoadStatus(state),
 });
 

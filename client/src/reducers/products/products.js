@@ -1,24 +1,11 @@
 import { extend } from "../../utils";
+import ActionCreator from "./actions";
+import ActionType from "./types";
 
 const initialState = {
     products: [],
     loadStatus: false,
-};
-
-const ActionType = {
-    LOAD_PRODUCTS: `LOAD_PRODUCTS`,
-    CHANGE_LOAD_STATUS: `CHANGE_LOAD_STATUS`,
-};
-
-const ActionCreator = {
-    loadProducts: (data) => ({
-        type: ActionType.LOAD_PRODUCTS,
-        payload: data
-    }),
-    changeLoadStatus: (loadStatus) => ({
-        type: ActionType.CHANGE_LOAD_STATUS,
-        payload: loadStatus
-    }),
+    sortingProducts: [],
 };
 
 const Operation = {
@@ -26,6 +13,12 @@ const Operation = {
         return api.get(`/products`)
             .then((data) => {
                 dispatch(ActionCreator.loadProducts(data.data));
+            });
+    },
+    loadSortingProducts: (subject) => (dispatch, getState, api) => {
+        return api.get(`/products?subject=${subject}`)
+            .then((data) => {
+                dispatch(ActionCreator.loadSortingProducts(data.data));
                 dispatch(ActionCreator.changeLoadStatus(true));
             });
     },
@@ -37,14 +30,14 @@ const reducer = (state = initialState, action) => {
             return extend(state, { products: action.payload });
         case ActionType.CHANGE_LOAD_STATUS:
             return extend(state, { loadStatus: action.payload });
+        case ActionType.LOAD_SORTING_PRODUCTS:
+            return extend(state, { sortingProducts: action.payload });
         default:
             return state;
     }
 };
 
 export {
-    ActionType,
-    ActionCreator,
     Operation,
     reducer,
 };

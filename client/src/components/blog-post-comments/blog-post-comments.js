@@ -1,7 +1,10 @@
 import React from "react";
 import Comment from "../comment";
 
-const BlogPostComments = ({comments}) => {
+const BlogPostComments = ({ post }) => {
+  
+  const comments = post.comments;
+
   return (
     <section className="articles-info-section">
       <div className="container">

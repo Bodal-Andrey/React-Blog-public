@@ -1,18 +1,9 @@
 import { extend } from "../../utils";
+import ActionCreator from "./actions";
+import ActionType from "./types";
 
 const initialState = {
     lastComments: [],
-};
-
-const ActionType = {
-    LOAD_LAST_COMMENTS: `LOAD_LAST_COMMENTS`,
-};
-
-const ActionCreator = {
-    loadLastComments: (data) => ({
-        type: ActionType.LOAD_LAST_COMMENTS,
-        payload: data
-    }),
 };
 
 const Operation = {
@@ -34,8 +25,6 @@ const reducer = (state = initialState, action) => {
 };
 
 export {
-    ActionType,
-    ActionCreator,
     Operation,
     reducer,
 };

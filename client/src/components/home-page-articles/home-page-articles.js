@@ -5,7 +5,7 @@ import Article from "../article";
 const HomePageArticles = ({ posts }) => {
   return (
     <section className="articles">
-      {posts.slice(0, 4).map((post) => <Article post={post} />)}
+      {posts.slice(5, 9).map((post) => <Article post={post} />)}
       <Pagination />
     </section>
   );

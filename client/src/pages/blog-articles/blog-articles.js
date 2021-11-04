@@ -4,16 +4,16 @@ import Layout from "../../common/layout";
 import AsidePanels from "../../components/aside-panels";
 import CategoryTitle from "../../components/category-title";
 import BlogListArticles from "../../components/blog-list-articles";
-import { getLoadStatus, getPosts, getUser } from "../../reducers/posts/selectors";
+import { getPostCategory, getLoadStatus, getSortingPosts, getUser } from "../../reducers/posts/selectors";
 import withLoad from "../../components/hocs/withLoad";
 
-const BlogArticles = ({ posts, user }) => {
+const BlogArticles = ({ posts, user, postCategory }) => {
 
     return (
         <Layout>
             <div className="col-xs-12">
                 <CategoryTitle
-                    title={`Graphic`}
+                    title={postCategory}
                     quantity={posts.length}
                     name={`Articles`}
                 />
@@ -33,9 +33,10 @@ const BlogArticles = ({ posts, user }) => {
 };
 
 const mapStateToProps = (state) => ({
-    posts: getPosts(state),
+    posts: getSortingPosts(state),
     user: getUser(state),
     loadStatus: getLoadStatus(state),
+    postCategory: getPostCategory(state),
 });
 
 export default connect(mapStateToProps)(withLoad(BlogArticles));
